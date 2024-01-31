@@ -15,16 +15,19 @@ depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 install=dwm.install
 source=(dwm.desktop
         https://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
-        config.h)
+        config.h
+        rmaster.patch)
 sha256sums=('bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81'
             'fa9c0d69a584485076cfc18809fd705e5c2080dafb13d5e729a3646ca7703a6e'
-            'SKIP')
+            'SKIP'
+            'b266f50328c6120c1ecf65d3380ff96137307b567d11e56c7684bbcf3ac9253d')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
   if [[ -f "$srcdir/config.h" ]]; then
     cp -fv "$srcdir/config.h" config.h
   fi
+  patch --forward --strip=2 --input="$srcdir/rmaster.patch"
 }
 
 build() {
